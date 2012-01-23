@@ -86,8 +86,7 @@ NOCONFIGURE=1 autoreconf -fi
   --disable-static \
   --with-gtk=3
 
-# Warning, don't use parallel builds for this package, known issues.
-%make
+%make LIBS='-lgmodule-2.0'
 
 %install
 %makeinstall_std
