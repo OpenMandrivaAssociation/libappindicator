@@ -86,7 +86,7 @@ NOCONFIGURE=1 autoreconf -fi
   --disable-static \
   --with-gtk=3
 
-%make LIBS='-lgmodule-2.0'
+make LIBS='-lgmodule-2.0'
 
 %install
 %makeinstall_std
