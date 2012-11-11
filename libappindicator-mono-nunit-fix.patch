@@ -1,0 +1,12 @@
+diff -urN libappindicator-0.4.1.old/configure.ac libappindicator-0.4.1/configure.ac
+--- libappindicator-0.4.1.old/configure.ac	2011-09-28 18:41:05.573013215 +0100
++++ libappindicator-0.4.1/configure.ac	2011-10-05 20:28:15.839674960 +0100
+@@ -153,7 +153,7 @@
+ AC_PATH_PROG(GAPI_FIXUP, gapi2-fixup, no)
+ AC_SUBST(GAPI_FIXUP)
+ 
+-PKG_CHECK_MODULES(NUNIT, nunit >= 2.4.7)
++PKG_CHECK_MODULES(NUNIT, mono-nunit >= 2.4.7)
+ 
+ ###########################
+ # Check to see if we're local
