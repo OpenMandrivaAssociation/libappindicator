@@ -4,8 +4,8 @@
 
 Summary:	Application indicators library
 Name:		libappindicator
-Version:	0.4.1
-Release:	2
+Version:	12.10.0
+Release:	1
 License:	LGPLv2,LGPLv3
 Url:		https://launchpad.net/libappindicator
 Group:		System/Libraries
@@ -14,12 +14,8 @@ Source0:	%{name}-%{version}.tar.gz
 #-- This patch fixes python links and  eplaces pkgconfig() calls from "nunit" to "mono-nunit"
 # PATCH-FIX-OPENSUSE - libappindicator-mono-nunit-fix.patch nmarques@opensuse.org 
 #-- use mono-nunit for pkgconfig() calls instead of nunit
-Patch0:	libappindicator-mono-nunit-fix.patch
+#Patch0:	libappindicator-mono-nunit-fix.patch
 # PATCH-FIX-OPENSUSE - libappindicator-header-fixes.patch nmarques@opensuse.org 
-#-- fixe header includes
-Patch1:	libappindicator-header-fixes.patch
-#-- fix .pc file
-Patch2:	libappindicator-pkgconfig-fix.patch
 
 BuildRequires:  gnome-common
 BuildRequires:  intltool
@@ -108,4 +104,14 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/gir-1.0/
+
+
+
+%changelog
+* Wed Jan 25 2012 Matthew Dawkins <mattydaw@mandriva.org> 0.4.1-2
++ Revision: 768318
+- bump release for BS
+- removing parallel build in attempt to fix build
+- fixed linking to libgmodule-2.0
+- imported package libappindicator
 
