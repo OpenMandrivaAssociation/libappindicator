@@ -5,7 +5,7 @@
 Summary:	Application indicators library
 Name:		libappindicator
 Version:	12.10.0
-Release:	1
+Release:	2
 License:	LGPLv2,LGPLv3
 Url:		https://launchpad.net/libappindicator
 Group:		System/Libraries
