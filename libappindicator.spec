@@ -22,7 +22,7 @@ BuildRequires:  intltool
 BuildRequires:  perl-XML-SAX
 BuildRequires:  vala-devel
 BuildRequires:  pkgconfig(dbus-glib-1)
-BuildRequires:  pkgconfig(dbusmenu-gtk3-0.4)
+BuildRequires:  pkgconfig(dbusmenu-gtk3-0.4) >= 0.6.2
 BuildRequires:  pkgconfig(gapi-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0)
 BuildRequires:  pkgconfig(gnome-doc-utils)
