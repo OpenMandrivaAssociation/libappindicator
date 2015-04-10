@@ -82,6 +82,7 @@ This package provides the files that are needed to build applications.
 %build
 export CC=gcc
 export CXX=g++
+export CFLAGS+=" -fno-strict-aliasing -Wno-error=deprecated-declarations"
 # Warning, patch requires reconf
 NOCONFIGURE=1 autoreconf -fi
 %configure2_5x \
