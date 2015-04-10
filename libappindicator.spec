@@ -111,6 +111,7 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/gir-1.0/
+%{_datadir}/vala/vapi/
 
 
 
