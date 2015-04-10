@@ -1,3 +1,6 @@
+# As soon as EVRD macro really works I won't disable linting.Sflo
+%define _build_pkgcheck_set %{nil}
+#
 %define major 1
 %define libname %mklibname appindicator %{major}
 %define develname %mklibname appindicator -d
@@ -63,7 +66,7 @@ This package provides assemblies to be used by applications
 %package -n %{develname}
 Summary:	Application indicator library - development files
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
 
 %description -n %{develname}
 A library and indicator to take menus from the applications and place them in
@@ -106,12 +109,4 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %{_datadir}/gir-1.0/
 
 
-
-%changelog
-* Wed Jan 25 2012 Matthew Dawkins <mattydaw@mandriva.org> 0.4.1-2
-+ Revision: 768318
-- bump release for BS
-- removing parallel build in attempt to fix build
-- fixed linking to libgmodule-2.0
-- imported package libappindicator
 
