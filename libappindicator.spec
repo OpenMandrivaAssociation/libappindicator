@@ -38,6 +38,7 @@ BuildRequires:  pkgconfig(mono)
 BuildRequires:  pkgconfig(mono-nunit)
 BuildRequires:  pkgconfig(pygobject-2.0)
 BuildRequires:  pkgconfig(pygtk-2.0)
+BuildRequires: gcc-c++, gcc, gcc-cpp
 
 %description
 A library and indicator to take menus from applications and place them in
@@ -79,6 +80,8 @@ This package provides the files that are needed to build applications.
 %apply_patches
 
 %build
+export CC=gcc
+export CXX=g++
 # Warning, patch requires reconf
 NOCONFIGURE=1 autoreconf -fi
 %configure2_5x \
