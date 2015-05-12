@@ -8,7 +8,7 @@
 Summary:	Application indicators library
 Name:		libappindicator
 Version:	12.10.0
-Release:	2
+Release:	3
 License:	LGPLv2,LGPLv3
 Url:		https://launchpad.net/libappindicator
 Group:		System/Libraries
@@ -85,7 +85,7 @@ export CXX=g++
 export CFLAGS+=" -fno-strict-aliasing -Wno-error=deprecated-declarations"
 # Warning, patch requires reconf
 NOCONFIGURE=1 autoreconf -fi
-%configure2_5x \
+%configure \
   --disable-static \
   --with-gtk=3
 
