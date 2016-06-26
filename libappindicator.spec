@@ -1,3 +1,5 @@
+%define _disable_rebuild_configure 1
+
 # As soon as EVRD macro really works I won't disable linting.Sflo
 %define _build_pkgcheck_set %{nil}
 %define major 1
@@ -214,6 +216,8 @@ pushd %{name}-%{version}
 popd
 cp -a %{name}-%{version} %{name}-gtk2
 mv -f %{name}-%{version} %{name}-gtk3
+
+sed -i "s#gmcs#mcs#g" configure.ac
 
 %build
 export CC=gcc
