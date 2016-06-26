@@ -1,3 +1,5 @@
+%define _disable_rebuild_configure 1
+
 # As soon as EVRD macro really works I won't disable linting.Sflo
 %define _build_pkgcheck_set %{nil}
 #
@@ -77,6 +79,8 @@ This package provides the files that are needed to build applications.
 %prep
 %setup -q
 %apply_patches
+
+sed -i "s#gmcs#mcs#g" configure.ac
 
 %build
 export CC=gcc
