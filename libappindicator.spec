@@ -35,7 +35,7 @@ Group:			System/Libraries
 License:		GPLv3
 URL:			http://launchpad.net/libappindicator
 Source0:		http://launchpad.net/libappindicator/12.10/%{version}/+download/%{name}-%{version}.tar.gz
-Patch0:			libappindicator-mono-nunit-fix.patch
+#Patch0:			libappindicator-mono-nunit-fix.patch
 Patch2:			libappindicator-12.10.0-mga-no-werror.patch
 Patch3:			libappindicator-mono.patch
 
@@ -208,15 +208,15 @@ Tool to load libappindicator plugins.
 #--------------------------------------------------------------------
 
 %prep
-%setup -q
+%setup -q -c
 
 pushd %{name}-%{version}
 %apply_patches
+sed -i "s#gmcs#mcs#g" configure.ac
 popd
+
 cp -a %{name}-%{version} %{name}-gtk2
 mv -f %{name}-%{version} %{name}-gtk3
-
-sed -i "s#gmcs#mcs#g" configure.ac
 
 %build
 export CC=gcc
