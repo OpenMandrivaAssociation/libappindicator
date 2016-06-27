@@ -9,7 +9,7 @@
 %{?_without_gtk3: %global gtk3 0}
 %{?_with_gtk3: %global gtk3 1}
 
-%define gtk2 1
+%define gtk2 0
 %{?_without_gtk3: %global gtk2 0}
 %{?_with_gtk3: %global gtk2 1}
 
