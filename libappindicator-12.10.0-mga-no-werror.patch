@@ -1,0 +1,13 @@
+Index: libappindicator-12.10.0/src/Makefile.am
+===================================================================
+--- libappindicator-12.10.0/src/Makefile.am
++++ libappindicator-12.10.0/src/Makefile.am	2014-10-14 07:07:59.355515831 +0000
+@@ -76,7 +76,7 @@
+ libappindicator_la_CFLAGS = \
+ 	$(LIBRARY_CFLAGS) \
+ 	$(COVERAGE_CFLAGS) \
+-	-Wall -Werror \
++	-Wall \
+ 	-DG_LOG_DOMAIN=\"libappindicator\"
+ 
+ libappindicator_la_LIBADD = \
