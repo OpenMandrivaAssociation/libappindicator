@@ -43,7 +43,6 @@ Patch3:			libappindicator-mono.patch
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(dbusmenu-gtk3-0.4) >= 0.5.90
 BuildRequires:	pkgconfig(indicator3-0.4) >= 0.4.93
-BuildRequires:	pkgconfig(indicate-0.7)
 %endif
 %if %gtk2
 BuildRequires:	pkgconfig(gtk+-2.0)
