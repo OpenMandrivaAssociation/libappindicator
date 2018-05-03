@@ -1,0 +1,22 @@
+--- libappindicator-12.10.0/bindings/mono/appindicator-sharp-0.1.pc.in.orig	2012-07-11 19:28:34.415113869 +0200
++++ libappindicator-12.10.0/bindings/mono/appindicator-sharp-0.1.pc.in	2014-01-01 10:11:44.160075018 +0100
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+ libdir=@libdir@
+-assemblies_dir=${libdir}/cli/appindicator-sharp-0.1
++assemblies_dir=${prefix}/lib/mono/appindicator-sharp
+ 
+ Name: appindicator-sharp
+ Description: application indicators for .NET
+--- libappindicator-12.10.0/bindings/mono/Makefile.am.orig	2012-07-11 19:28:34.415113869 +0200
++++ libappindicator-12.10.0/bindings/mono/Makefile.am	2014-01-01 10:12:22.020073430 +0100
+@@ -32,7 +32,7 @@
+ 	$(POLICY1).config
+ 
+ assemblydir = $(libdir)/cli/appindicator-sharp-0.1
+-assembly_DATA = $(TARGET)
++noinst_DATA = $(TARGET)
+ 
+ CLEANFILES = \
+ 	$(ASSEMBLY) \
