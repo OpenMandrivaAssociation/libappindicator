@@ -25,7 +25,7 @@
 %define girgtk2name %mklibname appindicator2-gir %{girmajor}
 %endif
 
-%define build_mono 1
+%define build_mono 0
 
 Summary:		A library to allow applications to export a menu into the Unity Menu bar
 Name:			libappindicator
@@ -51,8 +51,6 @@ BuildRequires:	pkgconfig(indicator-0.4) >= 0.4.93
 BuildRequires:	pkgconfig(python2)
 %endif
 BuildRequires:	gnome-common
-BuildRequires:	gtk-doc
-BuildRequires:	gtk-doc-mkpdf
 BuildRequires:	intltool
 BuildRequires:	perl-XML-SAX
 BuildRequires:	vala-tools
@@ -119,7 +117,9 @@ Development files needed by libappindicator.
 %{_includedir}/libappindicator3-0.1/
 %{_libdir}/libappindicator3.so
 %{_libdir}/pkgconfig/appindicator3-0.1.pc
+%if %build_mono
 %{_libdir}/pkgconfig/appindicator-sharp-0.1.pc
+%endif
 %{_datadir}/gir-1.0/AppIndicator3-0.1.gir
 %{_datadir}/vala/vapi/appindicator3-0.1.*
 %endif
@@ -219,19 +219,17 @@ cp -a %{name}-%{version} %{name}-gtk2
 mv -f %{name}-%{version} %{name}-gtk3
 
 %build
-export CC=gcc
-export CXX=g++
 export PYTHON=%{__python2}
 export CFLAGS+=" -fno-strict-aliasing -Wno-error=deprecated-declarations"
 
 %if %gtk2
 pushd %{name}-gtk2
 sed -i "s#gmcs#mcs#g" configure.ac
+sed -i -e 's/ -Werror//' {src,tests}/Makefile.{am,in}
 autoreconf -vfi
 export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
 %configure \
         --with-gtk=2 \
-        --enable-gtk-doc \
         --disable-static
 # Parallel make, crash the build
 %make -j1
@@ -241,11 +239,11 @@ popd
 %if %gtk3
 pushd %{name}-gtk3
 sed -i "s#gmcs#mcs#g" configure.ac
+sed -i -e 's/ -Werror//' {src,tests}/Makefile.{am,in}
 autoreconf -vfi
 export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
 %configure \
         --with-gtk=3 \
-        --enable-gtk-doc \
         --disable-static
 # Parallel make, crash the build
 %make -j1
