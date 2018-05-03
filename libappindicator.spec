@@ -10,7 +10,7 @@
 Summary:	Application indicators library
 Name:		libappindicator
 Version:	12.10.0
-Release:	4
+Release:	5
 License:	LGPLv2,LGPLv3
 Url:		https://launchpad.net/libappindicator
 Group:		System/Libraries
@@ -83,16 +83,26 @@ This package provides the files that are needed to build applications.
 sed -i "s#gmcs#mcs#g" configure.ac
 
 %build
-export CC=gcc
-export CXX=g++
-export CFLAGS+=" -fno-strict-aliasing -Wno-error=deprecated-declarations"
+#export CC=gcc
+#export CXX=g++
+#export CFLAGS+=" -fno-strict-aliasing -Wno-error=deprecated-declarations"
+sed -i -e 's/ -Werror//' {src,tests}/Makefile.{am,in}
+sed -i "s#gmcs#mcs#g" configure.ac
+# fix for gtk-doc 1.26
+sed -i 's/--nogtkinit//' docs/reference/Makefile.am
+#gtkdocize --copy
+cp -f gtk-doc.make gtk-doc.local.make
+autoreconf -vif
+
 # Warning, patch requires reconf
 NOCONFIGURE=1 autoreconf -fi
+export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
 %configure \
   --disable-static \
   --with-gtk=3
 
-make LIBS='-lgmodule-2.0'
+make V=1
+#LIBS='-lgmodule-2.0'
 
 %install
 %makeinstall_std
