@@ -66,7 +66,7 @@ BuildRequires:	pkgconfig(mono-nunit)
 BuildRequires:	pkgconfig(gtk-sharp-2.0)
 BuildRequires:	pkgconfig(gapi-2.0)
 %endif
-BuildRequires:	pkgconfig(pygobject-3.0)
+BuildRequires:	pkgconfig(pygobject-2.0)
 BuildRequires:	pkgconfig(pygtk-2.0)
 
 %description
