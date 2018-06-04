@@ -48,7 +48,6 @@ BuildRequires:	pkgconfig(indicator3-0.4) >= 0.4.93
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(dbusmenu-gtk-0.4) >= 0.5.90
 BuildRequires:	pkgconfig(indicator-0.4) >= 0.4.93
-BuildRequires:	pkgconfig(python2)
 %endif
 BuildRequires:	gnome-common
 BuildRequires:	intltool
@@ -68,6 +67,7 @@ BuildRequires:	pkgconfig(gapi-2.0)
 %endif
 BuildRequires:	pkgconfig(pygobject-2.0)
 BuildRequires:	pkgconfig(pygtk-2.0)
+BuildRequires:	pkgconfig(python2)
 
 %description
 A library to allow applications to export a menu into the Unity Menu bar.
