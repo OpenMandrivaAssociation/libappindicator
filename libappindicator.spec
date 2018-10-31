@@ -30,7 +30,7 @@
 Summary:		A library to allow applications to export a menu into the Unity Menu bar
 Name:			libappindicator
 Version:		12.10.0
-Release:		5
+Release:		6
 Group:			System/Libraries
 License:		GPLv3
 URL:			http://launchpad.net/libappindicator
