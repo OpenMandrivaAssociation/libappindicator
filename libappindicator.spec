@@ -9,7 +9,7 @@
 %{?_without_gtk3: %global gtk3 0}
 %{?_with_gtk3: %global gtk3 1}
 
-%define gtk2 0
+%define gtk2 1
 %{?_without_gtk3: %global gtk2 0}
 %{?_with_gtk3: %global gtk2 1}
 
@@ -30,7 +30,7 @@
 Summary:		A library to allow applications to export a menu into the Unity Menu bar
 Name:			libappindicator
 Version:		12.10.0
-Release:		6
+Release:		7
 Group:			System/Libraries
 License:		GPLv3
 URL:			http://launchpad.net/libappindicator
@@ -180,9 +180,9 @@ Requires:		%{libgtk2name} = %{EVRD}
 This package contains the Python 2 bindings for the appindicator library.
 
 %files -n python2-appindicator
-%dir %{python_sitearch}/appindicator/
-%{py2_sitearch}/appindicator/__init__.py*
-%{py2_sitearch}/appindicator/_appindicator.so
+%dir %{python2_sitearch}/appindicator/
+%{python2_sitearch}/appindicator/__init__.py*
+%{python2_sitearch}/appindicator/_appindicator.so
 %dir %{_datadir}/pygtk/
 %dir %{_datadir}/pygtk/2.0/
 %dir %{_datadir}/pygtk/2.0/defs/
