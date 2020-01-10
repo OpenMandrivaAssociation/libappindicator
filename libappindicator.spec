@@ -211,7 +211,7 @@ Tool to load libappindicator plugins.
 %setup -q -c
 
 pushd %{name}-%{version}
-%apply_patches
+%autopatch -p1
 sed -i "s#gmcs#mcs#g" configure.ac
 popd
 
