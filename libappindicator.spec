@@ -30,7 +30,7 @@
 Summary:		A library to allow applications to export a menu into the Unity Menu bar
 Name:			libappindicator
 Version:		12.10.0
-Release:		7
+Release:		8
 Group:			System/Libraries
 License:		GPLv3
 URL:			http://launchpad.net/libappindicator
@@ -66,7 +66,7 @@ BuildRequires:	pkgconfig(gtk-sharp-2.0)
 BuildRequires:	pkgconfig(gapi-2.0)
 %endif
 BuildRequires:	pkgconfig(pygobject-2.0)
-BuildRequires:	pkgconfig(pygtk-2.0)
+#BuildRequires:	pkgconfig(pygtk-2.0)
 BuildRequires:	pkgconfig(python2)
 
 %description
