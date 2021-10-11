@@ -49,6 +49,7 @@ BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(dbusmenu-gtk-0.4) >= 0.5.90
 BuildRequires:	pkgconfig(indicator-0.4) >= 0.4.93
 %endif
+BuildRequires:  gtk-doc
 BuildRequires:	gnome-common
 BuildRequires:	intltool
 BuildRequires:	perl-XML-SAX
