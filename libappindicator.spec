@@ -7,6 +7,7 @@
 
 %bcond_with	gtk2
 %bcond_without	gtk3
+%bcond_with	python
 %bcond_with	mono
 
 %if %{with gtk3}
@@ -59,17 +60,20 @@ BuildRequires:	pkgconfig(mono-nunit)
 BuildRequires:	pkgconfig(gtk-sharp-2.0)
 BuildRequires:	pkgconfig(gapi-2.0)
 %endif
+%if %{with gtk3}
 BuildRequires:	pkgconfig(pygobject-2.0)
 BuildRequires:	pkgconfig(pygtk-2.0)
 BuildRequires:	pkgconfig(python2)
+%endif
 
 %description
 A library to allow applications to export a menu into the Unity Menu bar.
 Based on KSNI, it also works in KDE, and will fallback to generic Systray
 support, if none of those are available.
 
-%if %{with gtk3}
 #--------------------------------------------------------------------
+
+%if %{with gtk3}
 %package -n %{libname}
 Summary:		libappindicator library
 Group:			System/Libraries
@@ -82,6 +86,7 @@ Library for libappindicator.
 %{_libdir}/libappindicator3.so.%{major}.*
 
 #--------------------------------------------------------------------
+
 %package -n %{girname}
 Summary:		GObject Introspection interface description for %{name}3
 Group:			System/Libraries
@@ -95,6 +100,7 @@ GObject Introspection interface description for %{name}3.
 %{_libdir}/girepository-1.0/AppIndicator3-%{girmajor}.typelib
 
 #--------------------------------------------------------------------
+
 %package -n %{libdevel}
 Summary:		libappindicator development files
 Group:			Development/GNOME and GTK+
@@ -118,8 +124,9 @@ Development files needed by libappindicator.
 %{_datadir}/vala/vapi/appindicator3-0.1.*
 %endif
 
-%if %{with gtk2}
 #--------------------------------------------------------------------
+
+%if %{with gtk2}
 %package -n %{libgtk2name}
 Summary:		libappindicator gtk+2 library
 Group:			System/Libraries
@@ -165,6 +172,8 @@ GObject Introspection interface description for %{name}3.
 %{_libdir}/girepository-1.0/AppIndicator-%{girmajor}.typelib
 
 #--------------------------------------------------------------------
+
+%if %{with python}
 %package -n python2-appindicator
 Summary:		Python 2 bindings for %{name}
 Group:			Development/Python
@@ -181,9 +190,11 @@ This package contains the Python 2 bindings for the appindicator library.
 %dir %{_datadir}/pygtk/2.0/
 %dir %{_datadir}/pygtk/2.0/defs/
 %{_datadir}/pygtk/2.0/defs/appindicator.defs
-
 %endif
+%endif
+
 #--------------------------------------------------------------------
+
 %if %{with mono}
 %package -n %{name}-sharp
 Summary:		libappindicator tool
@@ -212,7 +223,7 @@ cp -a %{name}-%{version} %{name}-gtk2
 mv -f %{name}-%{version} %{name}-gtk3
 
 %build
-export PYTHON=%{__python2}
+export PYTHON=%{__python3}
 export CFLAGS+=" -fno-strict-aliasing -Wno-error=deprecated-declarations"
 
 %if %{with gtk2}
