@@ -111,7 +111,7 @@ Development files needed by libappindicator.
 %{_includedir}/libappindicator3-0.1/
 %{_libdir}/libappindicator3.so
 %{_libdir}/pkgconfig/appindicator3-0.1.pc
-%if %build_mono
+%if %{with mono}
 %{_libdir}/pkgconfig/appindicator-sharp-0.1.pc
 %endif
 %{_datadir}/gir-1.0/AppIndicator3-0.1.gir
