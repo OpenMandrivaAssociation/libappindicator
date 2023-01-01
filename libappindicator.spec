@@ -29,16 +29,15 @@ Source0:	https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/%{name}/%{ve
 #Patch2:		libappindicator-12.10.0-mga-no-werror.patch
 #Patch3:		libappindicator-mono.patch
 
-%if %{with gtk3}
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(dbusmenu-gtk3-0.4) >= 0.5.90
 BuildRequires:	pkgconfig(indicator3-0.4) >= 0.4.93
-%endif
 BuildRequires:	gnome-common
 BuildRequires:	intltool
 BuildRequires:	perl-XML-SAX
 BuildRequires:	vala-tools
 BuildRequires:	vala-devel
+BuildRequires:	gtk-doc
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
