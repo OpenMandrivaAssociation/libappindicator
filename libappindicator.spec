@@ -5,44 +5,34 @@
 %define major 1
 %define girmajor 0.1
 
-%bcond_with	gtk2
-%bcond_without	gtk3
 %bcond_with	python
 %bcond_with	mono
 
-%if %{with gtk3}
-%define libname %mklibname appindicator 3 %{major}
-%define libdevel %mklibname appindicator3 -d
-%define girname %mklibname appindicator3-gir %{girmajor}
-%endif
+%define libname		%mklibname appindicator
+%define libdevel	%mklibname appindicator -d
+%define girname		%mklibname appindicator-gir
 
-%if %{with gtk2}
-%define libgtk2name %mklibname appindicator 2 %{major}
-%define libgtk2devel %mklibname appindicator2 -d
-%define girgtk2name %mklibname appindicator2-gir %{girmajor}
-%endif
+%define oldlibname	%mklibname appindicator 3 1
+%define oldgirname	%mklibname appindicator3-gir 0.1
 
-Summary:		A library to allow applications to export a menu into the Unity Menu bar
-Name:			libappindicator
-Version:		12.10.0
-Release:		9
-Group:			System/Libraries
-License:		GPLv3
-URL:			https://launchpad.net/libappindicator
-Source0:		https://launchpad.net/libappindicator/12.10/%{version}/+download/%{name}-%{version}.tar.gz
-#Patch0:		libappindicator-mono-nunit-fix.patch
-Patch2:			libappindicator-12.10.0-mga-no-werror.patch
-Patch3:			libappindicator-mono.patch
+Summary:	A library to allow applications to export a menu into the Unity Menu bar
+Name:		libappindicator
+Version:	12.10.1
+Release:	1
+Group:		System/Libraries
+License:	GPLv3
+URL:		https://launchpad.net/libappindicator
+# see https://launchpad.net/ubuntu/+source/libappindicator/12.10.1+20.10.20200706.1-0ubuntu1
+Source0:	https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/%{name}/%{version}+20.10.20200706.1-0ubuntu1/%{name}_%{version}+20.10.20200706.1.orig.tar.gz
+#Source0:	https://launchpad.net/libappindicator/12.10/%{version}/+download/%{name}-%{version}.tar.gz
+#Patch0:	libappindicator-mono-nunit-fix.patch
+#Patch2:		libappindicator-12.10.0-mga-no-werror.patch
+#Patch3:		libappindicator-mono.patch
 
 %if %{with gtk3}
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(dbusmenu-gtk3-0.4) >= 0.5.90
 BuildRequires:	pkgconfig(indicator3-0.4) >= 0.4.93
-%endif
-%if %{with gtk2}
-BuildRequires:	pkgconfig(gtk+-2.0)
-BuildRequires:	pkgconfig(dbusmenu-gtk-0.4) >= 0.5.90
-BuildRequires:	pkgconfig(indicator-0.4) >= 0.4.93
 %endif
 BuildRequires:	gnome-common
 BuildRequires:	intltool
@@ -60,7 +50,7 @@ BuildRequires:	pkgconfig(mono-nunit)
 BuildRequires:	pkgconfig(gtk-sharp-2.0)
 BuildRequires:	pkgconfig(gapi-2.0)
 %endif
-%if %{with gtk3}
+%if %{with python}
 BuildRequires:	pkgconfig(pygobject-2.0)
 BuildRequires:	pkgconfig(pygtk-2.0)
 BuildRequires:	pkgconfig(python2)
@@ -73,11 +63,10 @@ support, if none of those are available.
 
 #--------------------------------------------------------------------
 
-%if %{with gtk3}
 %package -n %{libname}
-Summary:		libappindicator library
-Group:			System/Libraries
-
+Summary:	libappindicator library
+Group:		System/Libraries
+Obsoletes:	%{oldlibname}
 %description -n %{libname}
 Library for libappindicator.
 
@@ -88,10 +77,11 @@ Library for libappindicator.
 #--------------------------------------------------------------------
 
 %package -n %{girname}
-Summary:		GObject Introspection interface description for %{name}3
-Group:			System/Libraries
-Requires:		%{libname} = %{EVRD}
-Obsoletes:		%{_lib}appindicator1 < 12.10.0-5
+Summary:	GObject Introspection interface description for %{name}3
+Group:		System/Libraries
+Requires:	%{libname} = %{EVRD}
+Obsoletes:	%{_lib}appindicator1 < 12.10.0-5
+Obsoletes:	%{oldgirname}
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}3.
@@ -102,12 +92,12 @@ GObject Introspection interface description for %{name}3.
 #--------------------------------------------------------------------
 
 %package -n %{libdevel}
-Summary:		libappindicator development files
-Group:			Development/GNOME and GTK+
-Requires:		%{libname} = %{EVRD}
-Requires:		%{girname} = %{EVRD}
-Provides:		%{name}3-devel = %{EVRD}
-Obsoletes:		%{_lib}appindicator-devel < 12.10.0-4
+Summary:	libappindicator development files
+Group:		Development/GNOME and GTK+
+Requires:	%{libname} = %{EVRD}
+Requires:	%{girname} = %{EVRD}
+Provides:	%{name}3-devel = %{EVRD}
+Obsoletes:	%{_lib}appindicator-devel < 12.10.0-4
 
 %description -n %{libdevel}
 Development files needed by libappindicator.
@@ -122,54 +112,6 @@ Development files needed by libappindicator.
 %endif
 %{_datadir}/gir-1.0/AppIndicator3-0.1.gir
 %{_datadir}/vala/vapi/appindicator3-0.1.*
-%endif
-
-#--------------------------------------------------------------------
-
-%if %{with gtk2}
-%package -n %{libgtk2name}
-Summary:		libappindicator gtk+2 library
-Group:			System/Libraries
-
-%description -n %{libgtk2name}
-Gtk+2 library for libappindicator.
-
-%files -n %{libgtk2name}
-%{_libdir}/libappindicator.so.%{major}
-%{_libdir}/libappindicator.so.%{major}.*
-
-#--------------------------------------------------------------------
-%package -n %{libgtk2devel}
-Summary:		libappindicator gtk+2 development files
-Group:			Development/GNOME and GTK+
-Requires:		%{libgtk2name} = %{EVRD}
-Requires:		%{girgtk2name} = %{EVRD}
-Provides:		%{name}-devel = %{EVRD}
-Obsoletes:		%{_lib}appindicator-devel < 12.10.0-3
-
-%description -n %{libgtk2devel}
-Development files needed by libappindicator for gtk+2.
-
-%files -n %{libgtk2devel}
-%doc %{_datadir}/gtk-doc/html/libappindicator/
-%{_includedir}/libappindicator-0.1/
-%{_libdir}/libappindicator.so
-%{_libdir}/pkgconfig/appindicator-0.1.pc
-%{_datadir}/gir-1.0/AppIndicator-0.1.gir
-%{_datadir}/vala/vapi/appindicator-0.1.*
-
-#--------------------------------------------------------------------
-%package -n %{girgtk2name}
-Summary:		GObject Introspection interface description for %{name}3
-Group:			System/Libraries
-Requires:		%{libgtk2name} = %{EVRD}
-Conflicts:		%{_lib}appindicator1 < 12.10.0-3
-
-%description -n %{girgtk2name}
-GObject Introspection interface description for %{name}3.
-
-%files -n %{girgtk2name}
-%{_libdir}/girepository-1.0/AppIndicator-%{girmajor}.typelib
 
 #--------------------------------------------------------------------
 
@@ -177,7 +119,7 @@ GObject Introspection interface description for %{name}3.
 %package -n python2-appindicator
 Summary:		Python 2 bindings for %{name}
 Group:			Development/Python
-Requires:		%{libgtk2name} = %{EVRD}
+Requires:		%{libname} = %{EVRD}
 
 %description -n python2-appindicator
 This package contains the Python 2 bindings for the appindicator library.
@@ -190,7 +132,6 @@ This package contains the Python 2 bindings for the appindicator library.
 %dir %{_datadir}/pygtk/2.0/
 %dir %{_datadir}/pygtk/2.0/defs/
 %{_datadir}/pygtk/2.0/defs/appindicator.defs
-%endif
 %endif
 
 #--------------------------------------------------------------------
@@ -213,59 +154,31 @@ Tool to load libappindicator plugins.
 #--------------------------------------------------------------------
 
 %prep
-%autosetup -c
+%autosetup -p0 -c
 
-pushd %{name}-%{version}
 sed -i "s#gmcs#mcs#g" configure.ac
-popd
-
-cp -a %{name}-%{version} %{name}-gtk2
-mv -f %{name}-%{version} %{name}-gtk3
+#sed -i -e 's/ -Werror//' {src,tests}/Makefile.{am,in}
 
 %build
-export PYTHON=%{__python3}
-export CFLAGS+=" -fno-strict-aliasing -Wno-error=deprecated-declarations"
-
-%if %{with gtk2}
-pushd %{name}-gtk2
-sed -i "s#gmcs#mcs#g" configure.ac
-sed -i -e 's/ -Werror//' {src,tests}/Makefile.{am,in}
-autoreconf -vfi
-export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
-%configure \
-        --with-gtk=2 \
-        --disable-static
-# Parallel make, crash the build
-%make -j1
-popd
+export CFLAGS="%{optflags} -fno-strict-aliasing -Wno-error=deprecated-declarations"
+%if %{with python}
+export PYTHON=%{__python2}
+%else
+export PYTHON=
 %endif
 
-%if %{with gtk3}
-pushd %{name}-gtk3
-sed -i "s#gmcs#mcs#g" configure.ac
-sed -i -e 's/ -Werror//' {src,tests}/Makefile.{am,in}
-autoreconf -vfi
-export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
+
+autoreconf -fiv
 %configure \
-        --with-gtk=3 \
-        --disable-static
+	--with-gtk=3 \
+	--enable-gtk-doc \
+	--disable-static
 # Parallel make, crash the build
 %make -j1
-popd
-%endif
+
 
 %install
-%if %{with gtk3}
-pushd %{name}-gtk2
 %make_install
-popd
-%endif
-
-%if %{with gtk3}
-pushd %{name}-gtk3
-%make_install
-popd
-%endif
 
 # Clean .la files
 find %{buildroot} -name '*.la' -delete
