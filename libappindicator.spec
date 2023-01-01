@@ -5,46 +5,40 @@
 %define major 1
 %define girmajor 0.1
 
-%define gtk3 1
-%{?_without_gtk3: %global gtk3 0}
-%{?_with_gtk3: %global gtk3 1}
+%bcond_with	gtk2
+%bcond_without	gtk3
+%bcond_with	mono
 
-%define gtk2 1
-%{?_without_gtk3: %global gtk2 0}
-%{?_with_gtk3: %global gtk2 1}
-
-%if %gtk3
+%if %{with gtk3}
 %define libname %mklibname appindicator 3 %{major}
 %define libdevel %mklibname appindicator3 -d
 %define girname %mklibname appindicator3-gir %{girmajor}
 %endif
 
-%if %gtk2
+%if %{with gtk2}
 %define libgtk2name %mklibname appindicator 2 %{major}
 %define libgtk2devel %mklibname appindicator2 -d
 %define girgtk2name %mklibname appindicator2-gir %{girmajor}
 %endif
 
-%define build_mono 0
-
 Summary:		A library to allow applications to export a menu into the Unity Menu bar
 Name:			libappindicator
 Version:		12.10.0
-Release:		7
+Release:		9
 Group:			System/Libraries
 License:		GPLv3
-URL:			http://launchpad.net/libappindicator
-Source0:		http://launchpad.net/libappindicator/12.10/%{version}/+download/%{name}-%{version}.tar.gz
-#Patch0:			libappindicator-mono-nunit-fix.patch
+URL:			https://launchpad.net/libappindicator
+Source0:		https://launchpad.net/libappindicator/12.10/%{version}/+download/%{name}-%{version}.tar.gz
+#Patch0:		libappindicator-mono-nunit-fix.patch
 Patch2:			libappindicator-12.10.0-mga-no-werror.patch
 Patch3:			libappindicator-mono.patch
 
-%if %gtk3
+%if %{with gtk3}
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(dbusmenu-gtk3-0.4) >= 0.5.90
 BuildRequires:	pkgconfig(indicator3-0.4) >= 0.4.93
 %endif
-%if %gtk2
+%if %{with gtk2}
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(dbusmenu-gtk-0.4) >= 0.5.90
 BuildRequires:	pkgconfig(indicator-0.4) >= 0.4.93
@@ -59,7 +53,7 @@ BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(gnome-doc-utils)
 BuildRequires:	pkgconfig(libpng)
-%if %build_mono
+%if %{with mono}
 BuildRequires:	pkgconfig(mono)
 BuildRequires:	pkgconfig(mono-nunit)
 BuildRequires:	pkgconfig(gtk-sharp-2.0)
@@ -74,7 +68,7 @@ A library to allow applications to export a menu into the Unity Menu bar.
 Based on KSNI, it also works in KDE, and will fallback to generic Systray
 support, if none of those are available.
 
-%if %gtk3
+%if %{with gtk3}
 #--------------------------------------------------------------------
 %package -n %{libname}
 Summary:		libappindicator library
@@ -124,7 +118,7 @@ Development files needed by libappindicator.
 %{_datadir}/vala/vapi/appindicator3-0.1.*
 %endif
 
-%if %gtk2
+%if %{with gtk2}
 #--------------------------------------------------------------------
 %package -n %{libgtk2name}
 Summary:		libappindicator gtk+2 library
@@ -190,7 +184,7 @@ This package contains the Python 2 bindings for the appindicator library.
 
 %endif
 #--------------------------------------------------------------------
-%if %build_mono
+%if %{with mono}
 %package -n %{name}-sharp
 Summary:		libappindicator tool
 Group:			Development/Other
@@ -208,10 +202,9 @@ Tool to load libappindicator plugins.
 #--------------------------------------------------------------------
 
 %prep
-%setup -q -c
+%autosetup -c
 
 pushd %{name}-%{version}
-%autopatch -p1
 sed -i "s#gmcs#mcs#g" configure.ac
 popd
 
@@ -222,7 +215,7 @@ mv -f %{name}-%{version} %{name}-gtk3
 export PYTHON=%{__python2}
 export CFLAGS+=" -fno-strict-aliasing -Wno-error=deprecated-declarations"
 
-%if %gtk2
+%if %{with gtk2}
 pushd %{name}-gtk2
 sed -i "s#gmcs#mcs#g" configure.ac
 sed -i -e 's/ -Werror//' {src,tests}/Makefile.{am,in}
@@ -236,7 +229,7 @@ export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
 popd
 %endif
 
-%if %gtk3
+%if %{with gtk3}
 pushd %{name}-gtk3
 sed -i "s#gmcs#mcs#g" configure.ac
 sed -i -e 's/ -Werror//' {src,tests}/Makefile.{am,in}
@@ -251,17 +244,18 @@ popd
 %endif
 
 %install
-%if %gtk2
+%if %{with gtk3}
 pushd %{name}-gtk2
-%makeinstall_std
+%make_install
 popd
 %endif
 
-%if %gtk3
+%if %{with gtk3}
 pushd %{name}-gtk3
-%makeinstall_std
+%make_install
 popd
 %endif
 
 # Clean .la files
 find %{buildroot} -name '*.la' -delete
+
