@@ -29,6 +29,11 @@ Source0:	https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/%{name}/%{ve
 #Patch2:		libappindicator-12.10.0-mga-no-werror.patch
 #Patch3:		libappindicator-mono.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(dbusmenu-gtk3-0.4) >= 0.5.90
 BuildRequires:	pkgconfig(indicator3-0.4) >= 0.4.93
